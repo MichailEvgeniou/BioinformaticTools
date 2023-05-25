@@ -21,10 +21,4 @@ pacman::p_load(tidyverse,
 no_cores <- availableCores() - 1
 plan(multicore, workers = no_cores)
 
-#data
-source("C:/Users/MIchail Evgeniou/Desktop/PhD/R_Projects/BioinfoNShit/0.data.R")
-#Functions
-source("C:/Users/MIchail Evgeniou/Desktop/PhD/R_Projects/BioinfoNShit/DC_parJacSim.R")
-source("C:/Users/MIchail Evgeniou/Desktop/PhD/R_Projects/BioinfoNShit/DC_SimScoreClustering.R")
-source("C:/Users/MIchail Evgeniou/Desktop/PhD/R_Projects/BioinfoNShit/DC_ConnectClinicalDataToClusters.R")
-source("C:/Users/MIchail Evgeniou/Desktop/PhD/R_Projects/BioinfoNShit/DC_TranslateDrugToProximity.R")
+
