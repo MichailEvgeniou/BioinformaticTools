@@ -1,24 +1,22 @@
-#libraries
-t <- data.frame(human_uniprotID=c("P01308","P01317"),
-                bovine_uniprotID=c("P01317","P01317"))
-rio::export(t,"BeefTestData.csv")
-
-
+# BACK ---------------------------------------------------------------
+## packages----
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
-install.packages("pacman")
-pacman::p_load("rio","Rcpi","seqinr","protr")
+#install.packages("pacman")
+pacman::p_load("furrr","Rcpi","seqinr","protr")
+library(protr)
+## paralel computing----
+no_cores <- availableCores() - 1
+plan(multicore, workers = no_cores)
 
-# library( Rcpi ) 
- library(rio)
-# library(seqinr)
-# library(protr)
+## dammy data----
+t <- data.frame(human_uniprotID=c("P01308","P01317","O44750","Q78EG7","O44750"),
+                bovine_uniprotID=c("P01317","P01317","P79307","P01317","P79307"))
+rio::export(t,"BeefTestData.csv")
 
-install_formats()
+## the function----
 
-
-#the function
 beef <- function(prot1,prot2){
   #download fasta from unirpot
   prot1 <- prot1
@@ -53,13 +51,14 @@ beef <- function(prot1,prot2){
   return(result)
 }
 
-df <- read.csv("BeefTestData.csv")
 
-df[[1]][1]
-df[[1]][2]
-#uniprot id
+# FRONT -------------------------------------------------------------------
 
-prot1 <- df[[1]][1]
-prot2 <- df[[1]][2]
+## load the data----
+data <- read.csv("BeefTestData.csv")
 
-beef(prot1,prot2)
+## result----
+SimPairDf <- furrr::future_map2_dfr(data[[1]],
+                                    data[[2]],
+                                    beef)
+beef("P01308","P01308")
