@@ -1,21 +1,25 @@
 # BACK ---------------------------------------------------------------
+
 ## packages----
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
 #install.packages("pacman")
 pacman::p_load("furrr","Rcpi","seqinr","protr")
-library(protr)
+#library(protr)
 ## paralel computing----
-no_cores <- availableCores() - 1
+
+
+no_cores <- availableCores() - 1 #number of free cores
 plan(multicore, workers = no_cores)
 
-## dammy data----
-t <- data.frame(human_uniprotID=c("P01308","P01317","O44750","Q78EG7","O44750"),
-                bovine_uniprotID=c("P01317","P01317","P79307","P01317","P79307"))
-rio::export(t,"BeefTestData.csv")
 
-## the function----
+# ## dammy data----
+# t <- data.frame(human_uniprotID=c("P01308","P01317","O44750","Q78EG7","O44750"),
+#                 bovine_uniprotID=c("P01317","P01317","P79307","P01317","P79307"))
+# rio::export(t,"BeefTestData.csv")
+
+## function----
 
 beef <- function(prot1,prot2){
   #download fasta from unirpot
@@ -50,6 +54,12 @@ beef <- function(prot1,prot2){
   do.call(file.remove, list("prot.fasta1","prot.fasta2"))
   return(result)
 }
+
+##warning
+##!!!! MIND THE NUMBER OF CORES IN USE, DEFAULT PARAMETERS WILL USE 
+##!!!! ALL BUT ONE OF YOUR CORES. IF YOU WANT TO CHANGE IT CHEKC THE NUMBER ON LINE 15 
+
+warning("MIND THE NUMBER OF CORES IN USE, DEFAULT PARAMETERS WILL USE ALL BUT ONE OF YOUR CORES. IF YOU WANT TO CHANGE IT CHECK THE NUMBER ON LINE 15 ")
 
 
 # FRONT -------------------------------------------------------------------
