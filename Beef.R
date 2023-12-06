@@ -37,7 +37,7 @@ beef <- function(prot1,prot2){
   #do the similarity check
   protAlingment <- protr::twoSeqSim(protSeq1[[1]][1],
                                     protSeq2[[1]][1],
-                                    type = "local",
+                                    type = "global",
                                     submat = "BLOSUM62")
   
   #keep only the score 
