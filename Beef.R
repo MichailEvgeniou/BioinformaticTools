@@ -71,4 +71,4 @@ data <- read.csv("BeefTestData.csv")
 SimPairDf <- furrr::future_map2_dfr(data[[1]],
                                     data[[2]],
                                     beef)
-beef("P01308","P01308")
+
